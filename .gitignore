@@ -1,0 +1,21 @@
+# Obsidian workspace files
+.obsidian/workspace
+.obsidian/workspace.json
+.obsidian/cache
+.obsidian/plugins/obsidian-git/data.json
+
+# Environment files
+.env
+.env.local
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Node
+node_modules/
+
+# Private generated content
+# Uncomment if you have domains with sensitive generated outputs
+# personal/wiki/diary/
+# personal/wiki/health/
