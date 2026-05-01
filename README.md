@@ -602,10 +602,9 @@ This template implements the architecture described in:
 
 Read the full article:
 
-<br> <br>
-## [_beyond claudemd how to turn obsidian into a multi agent knowledge brain_](https://thehumantechblog.com/posts/beyond-claudemd-how-to-turn-obsidian-into-a-multi-agent-knowledge-brain)
- <br>
+[Beyond Claude.md, How to Turn Obsidian into a Multi Agent Knowledge Brain](https://thehumantechblog.com/posts/beyond-claudemd-how-to-turn-obsidian-into-a-multi-agent-knowledge-brain)
 
+Tip: Use Ctrl plus click, or Cmd plus click on macOS, to open it in a new tab.
 ## License
 
 MIT.
