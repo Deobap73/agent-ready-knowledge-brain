@@ -446,6 +446,8 @@ Remove what you do not need.
 
 Rename what does not fit your life or work.
 
+Add whatever you think works best for you.
+
 ### Step 6. Add source material to raw
 
 Original inputs go into `raw`.
