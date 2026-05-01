@@ -19,3 +19,5 @@ node_modules/
 # Uncomment if you have domains with sensitive generated outputs
 # personal/wiki/diary/
 # personal/wiki/health/
+
+.code-workspace
