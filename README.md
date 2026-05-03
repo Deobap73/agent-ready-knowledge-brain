@@ -1,6 +1,6 @@
 # Agent Ready Knowledge Brain
 
-A multi agent Obsidian vault template for building a portable Knowledge Brain that works with Claude Code, Codex, ChatGPT Projects, Custom GPTs, Antigravity and repository based AI workflows.
+A multi agent Obsidian vault template for building a portable Knowledge Brain that works with Claude Code, Codex, ChatGPT Projects, Custom GPTs, Antigravity, and repository based AI workflows.
 
 <br> <br>
 <img src="_blog/agent-ready-knowledge-brain.webp">
@@ -13,46 +13,46 @@ A lot of people are already using Obsidian with Claude Code to create what is of
 The usual setup is simple.
 
 You create an Obsidian vault.  
-You add notes, project files, ideas, personal knowledge and structured folders.  
+You add notes, project files, ideas, personal knowledge, and structured folders.  
 You add a `CLAUDE.md` file to explain how the vault works.  
 You run Claude Code inside the vault folder.  
 Claude reads the rules and starts helping you work with your notes.
 
 That works well.
 
-But I started asking a different question.
+But it raises a bigger question.
 
-What happens when I do not want to use only Claude?
+What happens when you do not want to use only Claude?
 
-What happens when I want the same Knowledge Brain to work with different agents?
+What happens when you want the same Knowledge Brain to work with different agents?
 
 What happens when the agent does not operate naturally inside the terminal of the Obsidian vault?
 
-That is the real problem this template tries to solve.
+That is the problem this template tries to solve.
 
-Claude Code can work directly inside the local vault. But other agents, such as Codex, GPT based assistants, IDE agents or repository based tools, often need a different operating model.
+Claude Code can work directly inside the local vault. Other agents, such as Codex, GPT based assistants, IDE agents, or repository based tools, often need a different operating model.
 
 So the idea is simple.
 
 Obsidian remains the human interface.
 
-The local vault remains the source of truth.
+The local Markdown vault remains the source of truth.
 
 Claude Code can operate locally through the terminal.
 
-Antigravity can open the same local project folder and use Codex, OpenAI’s coding agent, inside an IDE based workflow.
+Antigravity can open the same local project folder and use Codex, OpenAI's coding agent, inside an IDE based workflow.
 
-A private GitHub repository becomes the synchronization, portability and access layer.
+A private GitHub repository becomes the synchronization, portability, and access layer.
 
-`CLAUDE.md` guides Claude Code.
+`CLAUDE.md` is the behavioural source of truth.
 
-`AGENTS.md` guides Codex and repository based agents.
+`AGENTS.md` is the compatibility entry point for Codex, Antigravity, Cursor, and repository based agents.
 
-`GPT.md` guides ChatGPT Projects and Custom GPTs.
+`GPT.md` adapts the same system for ChatGPT Projects and Custom GPTs.
 
 `commands.md` defines repeatable workflows that all agents can follow.
 
-This turns the vault from a local first note folder into a portable, version controlled, multi environment and multi agent Knowledge Brain.
+This turns the vault from a local first note folder into a portable, version controlled, multi environment, and multi agent Knowledge Brain.
 
 ## The core idea
 
@@ -70,6 +70,7 @@ A real Knowledge Brain should tell agents:
 6. Which privacy rules apply.
 7. Which workflow to follow when a command is invoked.
 8. What needs to be logged after changes.
+9. Which file is the source of truth when multiple agent entry files exist.
 
 Without that structure, an agent has to guess.
 
@@ -79,30 +80,34 @@ And when agents guess inside a knowledge system, they eventually create a mess.
 
 Most Obsidian and AI setups stop at `CLAUDE.md`.
 
-That is useful, but it usually binds the workflow to one agent, one local terminal workflow and one way of working.
+That is useful, but it usually binds the workflow to one agent, one local terminal workflow, and one way of working.
 
 This template is built around a different idea.
 
 The vault is the source of truth.
 
-Different agents should be able to operate on the same structure, with the same rules, the same workflows and the same safety boundaries.
+`CLAUDE.md` contains the main behavioural rules.
 
-| Agent context | Entry file |
-|---|---|
-| Claude Code in terminal | `CLAUDE.md` |
-| Codex and repository based agents | `AGENTS.md` |
-| ChatGPT Projects and Custom GPTs | `GPT.md` |
-| All agents | `commands.md` for domain workflows |
+Other agent entry files should point back to those rules instead of duplicating them.
+
+Different agents should be able to operate on the same structure, with the same rules, the same workflows, and the same safety boundaries.
+
+| Agent context | Entry file | Behaviour source |
+|---|---|---|
+| Claude Code in terminal | `CLAUDE.md` | `CLAUDE.md` |
+| Codex, Antigravity, Cursor, and repository based agents | `AGENTS.md` | `CLAUDE.md` |
+| ChatGPT Projects and Custom GPTs | `GPT.md` | `CLAUDE.md` adapted through `GPT.md` |
+| All agents | `commands.md` for domain workflows | Domain `commands.md` |
 
 A private GitHub repository adds the portability layer.
 
-You can work locally in Obsidian, sync through Git, access the same vault from another machine and let repository based agents operate on the same structure.
+You can work locally in Obsidian, sync through Git, access the same vault from another machine, and let repository based agents operate on the same structure.
 
 You are no longer dependent only on the Obsidian local first model.
 
-You still keep the advantages of local markdown.
+You still keep the advantages of local Markdown.
 
-But you also gain version control, remote access, reviewable changes and multi agent compatibility.
+But you also gain version control, remote access, reviewable changes, and multi agent compatibility.
 
 ## What is inside
 
@@ -144,29 +149,33 @@ domain-name/
 
 ### CLAUDE.md
 
-Used by Claude Code.
+`CLAUDE.md` is the behavioural source of truth for the vault.
 
-This file explains how Claude should operate inside the vault when it is running locally in the terminal.
+Claude Code reads this file directly when operating locally in the terminal.
+
+Other agent entry files should point back to this file instead of duplicating its rules.
 
 ### AGENTS.md
 
-Used by Codex and repository based agents.
+`AGENTS.md` is the compatibility entry point for Codex, Antigravity, Cursor, and repository based agents.
 
-This file explains how agents should operate when they are working through a repository, an IDE extension or a tool such as Antigravity.
+It tells those agents how to enter the vault, then directs them to the root `CLAUDE.md`, the relevant domain `CLAUDE.md`, the relevant domain `commands.md`, and the relevant domain `index.md`.
+
+It should not become a second source of truth.
 
 ### GPT.md
 
-Used for ChatGPT Projects and Custom GPTs.
+`GPT.md` adapts the same knowledge system for ChatGPT Projects and Custom GPTs.
 
-This file adapts the same knowledge system for agents that may not have direct access to the local vault.
+ChatGPT may not always have direct access to the local vault. This file explains how to request the right files, avoid guessing, and work with uploaded or linked knowledge.
 
 ### commands.md
 
-Defines repeatable workflows.
+`commands.md` defines repeatable workflows.
 
 These are not shell commands.
 
-They are markdown based workflow contracts for agents.
+They are Markdown based workflow contracts for agents.
 
 For example:
 
@@ -178,36 +187,35 @@ This tells the agent to read the relevant domain instructions and follow the doc
 
 ### raw
 
-Stores original source material.
+`raw` stores original source material.
 
-Agents must never modify files inside `raw`.
+Agents must never modify files inside `raw` unless a command explicitly says a newly approved source must be saved there.
 
 ### wiki
 
-Stores processed and structured knowledge.
+`wiki` stores processed and structured knowledge.
 
 Agents can update `wiki` only when the change is supported by source material and the domain rules allow it.
 
 ### index.md
 
-Acts as the domain map.
+`index.md` acts as the domain map.
 
 Agents read it before modifying structured knowledge.
 
 ### log.md
 
-Records operational changes.
+`log.md` records operational changes.
 
 Every write operation should append a short note to the relevant `log.md`.
 
 ### _bridges
 
-Stores cross domain synthesis.
+`_bridges` stores cross domain synthesis.
 
 A bridge is not a lazy link.
 
 A bridge should exist only when a relationship between domains creates new meaning.
-
 
 ## Why use a private GitHub repository
 
@@ -230,7 +238,7 @@ This gives you:
 7. Compatibility with repository based agents.
 8. A way for different local environments to work on the same vault.
 
-The repository should be private if your vault contains personal notes, private workflows, career material or sensitive thinking.
+The repository should be private if your vault contains personal notes, private workflows, career material, or sensitive thinking.
 
 Do not put a personal Knowledge Brain in a public repository unless you are absolutely sure it contains no private content.
 
@@ -270,46 +278,70 @@ Open the same project folder in Google Antigravity.
 
 Antigravity can create its own `.code-workspace` file for the local project environment.
 
-From there, use Codex, OpenAI’s coding agent, to operate on the same vault structure.
+From there, use Codex, OpenAI's coding agent, to operate on the same vault structure.
 
-Codex should read:
+Codex and repository based agents should read:
 
 1. The root `AGENTS.md`.
-2. The relevant domain `AGENTS.md`.
-3. The relevant domain `commands.md` when a command is invoked.
-4. The relevant `index.md` before modifying structured knowledge.
+2. The root `CLAUDE.md`.
+3. The relevant domain `AGENTS.md`.
+4. The relevant domain `CLAUDE.md`.
+5. The relevant domain `commands.md` when a command is invoked.
+6. The relevant `index.md` before modifying structured knowledge.
+7. Only the minimum relevant wiki pages needed for the task.
 
 This mode is useful when you want a local IDE based agent experience instead of a terminal based Claude Code workflow.
 
-The important point is that both modes operate on the same markdown based vault.
+The important point is that both modes operate on the same Markdown based vault and follow the same behavioural source of truth.
 
 ```text
 Same local folder
 Same Obsidian vault
 Same Git repository
 Different agent entry files
+Same behavioural source of truth
 Different working environments
 ```
 
-Claude Code uses:
+Claude Code enters through:
 
 ```text
 CLAUDE.md
 ```
 
-Codex uses:
+Codex, Antigravity, Cursor, and repository based agents enter through:
 
 ```text
 AGENTS.md
 ```
 
-ChatGPT Projects or Custom GPTs use:
+ChatGPT Projects or Custom GPTs enter through:
 
 ```text
 GPT.md
 ```
 
 The vault remains the source of truth.
+
+`CLAUDE.md` remains the behavioural source of truth.
+
+## Working with ChatGPT Projects and Custom GPTs
+
+ChatGPT does not automatically read local vault files.
+
+This template includes `GPT.md` so the same knowledge brain can be adapted to ChatGPT Projects and Custom GPTs.
+
+Depending on your setup, ChatGPT can work with the vault in three ways:
+
+1. By using `GPT.md` as project or GPT instructions.
+2. By uploading selected files such as `index.md`, `commands.md`, and wiki pages.
+3. By connecting to the GitHub repository when repository access is available.
+
+The rule is simple.
+
+If ChatGPT cannot see a file, it must ask for it.
+
+It must not invent the current state of the vault.
 
 ## Automatic sync with the Obsidian Git plugin
 
@@ -357,7 +389,7 @@ Agents should not decide to push changes automatically.
 
 Automatic sync is a user configured vault behaviour.
 
-If Obsidian Git is configured to auto commit and sync every few minutes, that is controlled by the user’s vault configuration, not by the agent.
+If Obsidian Git is configured to auto commit and sync every few minutes, that is controlled by the user's vault configuration, not by the agent.
 
 This keeps responsibility clear.
 
@@ -380,7 +412,6 @@ Recommended safety rules:
 7. Disable auto sync when testing dangerous workflows.
 8. Re enable auto sync only after reviewing the result.
 
-
 ## Quick start
 
 ### Step 1. Create a private repository from this template
@@ -400,7 +431,7 @@ cd agent-ready-knowledge-brain
 
 Open the cloned folder as an Obsidian vault.
 
-Everything is markdown.
+Everything is Markdown.
 
 Nothing is locked into a proprietary format.
 
@@ -446,7 +477,7 @@ Remove what you do not need.
 
 Rename what does not fit your life or work.
 
-Add whatever you think works best for you.
+Add whatever works best for your system.
 
 ### Step 6. Add source material to raw
 
@@ -472,143 +503,88 @@ Example:
 \ingest projects my-first-project
 ```
 
-The agent should read the relevant `commands.md`, process the raw file and generate structured knowledge inside `wiki`.
+The agent should read the relevant root entry file, then `CLAUDE.md`, then the domain instructions, then the domain `commands.md`, then process the raw file and generate structured knowledge inside `wiki`.
 
-### Step 8. Review before committing
+### Step 8. Review changes before syncing
 
-Always review the diff.
+Before committing or syncing, review the changed files.
 
-Then commit.
+Check that:
 
-```bash
-git status
-git diff
-git add .
-git commit -m "docs: add first project knowledge workflow"
-git push
-```
+1. No raw source was modified.
+2. New structured knowledge went into `wiki`.
+3. The relevant `index.md` was updated when needed.
+4. The relevant `log.md` was updated when files changed.
+5. No private content moved across domains without approval.
 
-If you use Obsidian Git auto sync, check the Git history regularly.
+## Example use cases
 
-## Adding a new domain
+### Career brain
 
-Each domain should include:
+Store job descriptions, CV versions, positioning notes, interview evidence, application decisions, and tracker updates.
 
-```text
-domain-name/
-  CLAUDE.md
-  AGENTS.md
-  GPT.md
-  commands.md
-  index.md
-  log.md
-  raw/
-  wiki/
-```
+The agent can help generate tailored CVs and cover letters only after reading the relevant career command workflow and evidence pages.
 
-To add a new domain:
+### Project brain
 
-1. Copy an existing domain.
-2. Rename the folder.
-3. Update `CLAUDE.md`.
-4. Update `AGENTS.md`.
-5. Update `GPT.md`.
-6. Rewrite `commands.md`.
-7. Update `index.md`.
-8. Keep `raw` immutable.
+Store project notes, architecture decisions, flows, issues, patterns, and lessons learned.
 
-## How agents use this vault
+The agent can turn raw project material into structured technical knowledge and reusable professional evidence.
 
-The general workflow is:
+### Writing brain
 
-1. Agent reads the root instruction file for its context.
-2. Agent identifies the active domain.
-3. Agent reads the domain instruction file.
-4. If a command is invoked, agent reads `commands.md`.
-5. Agent reads `index.md`.
-6. Agent reads the required input files.
-7. Agent writes outputs to the correct location.
-8. Agent appends to `log.md`.
-9. Agent shows the diff before committing.
-10. Agent does not initiate a push by itself.
+Store article ideas, drafts, essays, voice rules, themes, and public content plans.
 
-If Obsidian Git auto sync is enabled, sync is controlled by the user’s Obsidian configuration.
+The agent can help turn raw writing material into structured drafts while respecting source material and privacy boundaries.
 
-## Privacy model
+### Personal brain
 
-The `personal` domain has the strictest rules.
+Store diary entries, decisions, health notes, reviews, and private signals.
 
-Diary content, health data and private decisions never leave that domain.
+This domain has the strictest privacy rules. Health data, diary content, and relationship content never leave the personal domain.
 
-Cross domain signals must contain pointers only.
+## Safety model
 
-A pointer can say that something exists and may be relevant.
+This template assumes that agents are useful but not trustworthy by default.
 
-A pointer must not contain private content.
+That is why it uses:
 
-Privacy is not left to the agent's judgement.
+1. Immutable raw source folders.
+2. Structured wiki output folders.
+3. Domain indexes.
+4. Operation logs.
+5. Privacy boundaries.
+6. Cross domain bridge rules.
+7. Reviewable Git diffs.
+8. No automatic agent push rule.
+9. Clear source of truth hierarchy.
 
-Privacy is built into the folder structure and the instruction files.
+The goal is not to let agents do whatever they want.
 
-Read `docs/privacy-model.md` for the full model.
+The goal is to give agents a controlled workspace where they can be useful without damaging the knowledge system.
 
 ## What this template is not
 
-This is not a magic second brain.
+This is not an Obsidian plugin.
 
-This is not an AI that understands your life by vibes.
+This is not an AI product.
+
+This is not a vector database.
 
 This is not a replacement for thinking.
 
-This is not a productivity toy.
+This is a Markdown based operating model for building a portable, version controlled, agent ready Knowledge Brain.
 
-This is a structured starting point for building a markdown based Knowledge Brain that different agents can operate on safely.
+## Recommended first rule
 
-## Recommended first experiment
+Start small.
 
-Start with the projects domain.
+Use one domain.
 
-Create this file:
+Use one command.
 
-```text
-projects/raw/my-first-project.md
-```
+Review every change.
 
-Add a simple project description.
+Then expand.
 
-Then ask your local agent:
-
-```text
-\ingest projects my-first-project
-```
-
-Expected result:
-
-1. The agent reads the projects instructions.
-2. The agent reads the projects command workflow.
-3. The agent creates structured wiki content.
-4. The agent updates index.md.
-5. The agent appends to log.md.
-6. You review the diff.
-7. You commit or let your configured sync handle it.
-
-If the result is messy, fix the command workflow before adding more domains.
-
-## Related article
-
-This template implements the architecture described in:
-
-**Beyond Claude.md, How to Turn Obsidian into a Multi Agent Knowledge Brain**
-
-Read the full article:
-
-[Beyond Claude.md, How to Turn Obsidian into a Multi Agent Knowledge Brain](https://thehumantechblog.com/posts/beyond-claudemd-how-to-turn-obsidian-into-a-multi-agent-knowledge-brain)
-
-Tip: Use Ctrl plus click, or Cmd plus click on macOS, to open it in a new tab.
-## License
-
-MIT.
-
-Use it, fork it, adapt it.
-
-If you build something useful on top of it, share it.
+A Knowledge Brain becomes valuable because it is maintained with discipline, not because an agent touched it.
