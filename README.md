@@ -2,6 +2,10 @@
 
 A multi agent Obsidian vault template for building a portable Knowledge Brain that works with Claude Code, Codex, ChatGPT Projects, Custom GPTs, Antigravity and repository based AI workflows.
 
+<br> <br>
+<img src="_blog/agent-ready-knowledge-brain.webp">
+<br> <br>
+
 ## Why this exists
 
 A lot of people are already using Obsidian with Claude Code to create what is often called a Knowledge Brain.
@@ -442,6 +446,8 @@ Remove what you do not need.
 
 Rename what does not fit your life or work.
 
+Add whatever you think works best for you.
+
 ### Step 6. Add source material to raw
 
 Original inputs go into `raw`.
@@ -596,10 +602,9 @@ This template implements the architecture described in:
 
 Read the full article:
 
-```text
-https://thehumantechblog.com/posts/beyond-claudemd-how-to-turn-obsidian-into-a-multi-agent-knowledge-brain
-```
+[Beyond Claude.md, How to Turn Obsidian into a Multi Agent Knowledge Brain](https://thehumantechblog.com/posts/beyond-claudemd-how-to-turn-obsidian-into-a-multi-agent-knowledge-brain)
 
+Tip: Use Ctrl plus click, or Cmd plus click on macOS, to open it in a new tab.
 ## License
 
 MIT.
