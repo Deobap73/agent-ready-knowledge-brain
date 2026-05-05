@@ -1,0 +1,15 @@
+{
+  "name": "agent-ready-knowledge-brain",
+  "version": "1.0.0",
+  "description": "DOCX generation scripts for the career domain",
+  "scripts": {
+    "cv": "node _scripts/gen-cv.js",
+    "cover": "node _scripts/gen-cover.js"
+  },
+  "dependencies": {
+    "docx": "^9.6.1"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

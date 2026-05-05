@@ -4,7 +4,9 @@ These commands standardise how agents operate in the career domain.
 
 ## Agent Execution Model
 
-These are workflow instructions for agents, not shell commands. When invoked, the agent must read the required input files, create or update the specified output files, and respect domain rules.
+These are workflow instructions for agents, not shell commands.
+
+When invoked, the agent must read the required input files, create or update the specified output files, and respect domain rules.
 
 Before executing any command:
 
@@ -17,25 +19,33 @@ If a required input file is missing, stop and report it. Never guess.
 
 After any write operation, append a short note to `log.md`.
 
+---
+
 ## Prompts Layer
 
-Each command in this file has a corresponding detailed prompt file in `career/prompts/`.
+Each command has a corresponding detailed prompt file in `career/prompts/`.
 
 Before executing any command, read the corresponding prompt file for full agent logic.
 
 | Command | Prompt file |
 |---------|-------------|
-| \add | career/prompts/ingest-fit-analysis.md |
-| \decide | career/prompts/application-decision.md |
-| \cv | career/prompts/cv-generator.md |
-| \cover | career/prompts/cover-letter.md + career/prompts/cover-letter-validation.md |
-| \tracker | career/prompts/update-tracker.md |
+| `\add` | `career/prompts/ingest-fit-analysis.md` |
+| `\decide` | `career/prompts/application-decision.md` |
+| `\cv` | `career/prompts/cv-generator.md` |
+| `\cover` | `career/prompts/cover-letter.md` + `career/prompts/cover-letter-validation.md` |
+| `\tracker` | `career/prompts/update-tracker.md` |
 
-The commands.md defines the input/output contract. The prompt files define the execution logic.
+The `commands.md` defines the input/output contract. The prompt files define the execution logic.
+
+For DOCX generation, read `career/prompts/docx-format.md` before generating any `.docx` file.
+
+---
 
 ## Tracker Rule
 
-The tracker in `wiki/applications.md` is feedback memory, not an archive. Before generating fit analysis, CVs, or cover letters, review the tracker for patterns: what produced silence, what produced responses, what screening risks have appeared more than once.
+The tracker in `wiki/applications.md` is feedback memory, not an archive.
+
+Before generating fit analysis, CVs, or cover letters, review the tracker for patterns: what produced silence, what produced responses, what screening risks have appeared more than once.
 
 Do not overfit to one isolated result. Do not ignore a repeated pattern.
 
@@ -102,13 +112,21 @@ Do not overfit to one isolated result. Do not ignore a repeated pattern.
 - `wiki/evidence/` (mandatory)
 
 **Output:**
-- `generated-applications/{application-name}/cv-{application-name}.md`
+- `generated-applications/{application-name}/cv-ats-en.md` (markdown — primary output)
+- `generated-applications/{application-name}/cv-{application-name}.docx` (DOCX — generated from markdown)
+
+**DOCX generation sequence:**
+1. Generate `cv-ats-en.md` following the structure in `career/prompts/docx-format.md`
+2. Validate the markdown against the simple punctuation rule
+3. Run: `node _scripts/gen-cv.js {application-name}`
+4. Verify the DOCX was created
 
 **Rules:**
 - Tailor to the specific role and market.
 - Use evidence from `wiki/evidence/`.
 - Do not exaggerate titles or invent metrics.
 - Apply tracker lessons from `wiki/applications.md`.
+- Follow the simple punctuation rule throughout.
 
 ---
 
@@ -120,14 +138,23 @@ Do not overfit to one isolated result. Do not ignore a repeated pattern.
 - `raw-applications/{application-name}.md`
 - `generated-applications/{application-name}/fit-analysis.md`
 - `generated-applications/{application-name}/application-decision.md`
-- `generated-applications/{application-name}/cv-{application-name}.md`
+- `generated-applications/{application-name}/cv-ats-en.md`
 - `wiki/profile.md`
 - `wiki/positioning.md`
 
-**Output:**
-- `generated-applications/{application-name}/cover-letter-{application-name}.md`
+**Sequence:**
+1. Generate `cover-letter-en.md` following the structure in `career/prompts/docx-format.md`
+2. Run all validation checks from `career/prompts/cover-letter-validation.md`
+3. If any check fails, rewrite and run validation again
+4. Output the cover letter only after all checks pass
+5. Run: `node _scripts/gen-cover.js {application-name}`
+6. Verify the DOCX was created
 
-**Rules:**
+**Output:**
+- `generated-applications/{application-name}/cover-letter-en.md` (markdown)
+- `generated-applications/{application-name}/cover-letter-{application-name}.docx` (DOCX)
+
+**Cover letter rules:**
 - The cover letter must not repeat the CV. It must interpret it.
 - Lead with the strongest role-relevant angle from the fit analysis.
 - No generic phrases: "I am passionate about", "results-driven", "team player".
@@ -140,15 +167,21 @@ Do not overfit to one isolated result. Do not ignore a repeated pattern.
 
 **Purpose:** Update the application tracker after a completed cycle.
 
+**Mode:**
+- `WITH_COVER` — when a cover letter was created
+- `NO_COVER` — when no cover letter was required or useful
+
 **Input:**
 - All files in `generated-applications/{application-name}/`
 - `raw-applications/{application-name}.md`
 - `wiki/applications.md`
 
 **Output:**
-- `wiki/applications.md` — new row added with: date, company, role, market, version used, main angle, status, follow-up date, result, notes
+- `wiki/applications.md` — new row added
 - `wiki/applications.md` — lessons learned entry added
 - `generated-applications/{application-name}/follow-up-reminder.md`
+
+If no cover letter was created, record the reason in the tracker row under Notes.
 
 **Status options:** planned / drafted / submitted / follow-up due / follow-up sent / interview / rejected / archived
 
@@ -162,8 +195,10 @@ Do not overfit to one isolated result. Do not ignore a repeated pattern.
 1. `\add`
 2. `\decide`
 3. If not SKIP: `\cv`
-4. If not SKIP: `\cover`
-5. If not SKIP: `\tracker`
+4. If not SKIP: decide whether a cover letter is required
+5. If cover letter is required: `\cover`
+6. If no cover letter: record NO_COVER mode
+7. If not SKIP: `\tracker`
 
 Never skip `\decide`. Never generate a CV without fit analysis. Never complete without `\tracker`.
 
@@ -186,14 +221,21 @@ Use when:
 - Related capabilities
 
 **Output:**
-- career/wiki/public-assets/{asset-name}.md
+- `career/wiki/public-assets/{asset-name}.md`
 
 **Rules:**
 1. Do not treat public assets as job applications.
-2. Do not store them in generated-applications/.
-3. Every public asset must connect to at least one capability in career/wiki/evidence/.
+2. Do not store them in `generated-applications/`.
+3. Every public asset must connect to at least one capability in `career/wiki/evidence/`.
 4. If the asset does not strengthen positioning in a verifiable way, do not add it.
 
-**Output format for each asset file:**
+---
 
-Follow the template in career/wiki/public-assets/README.md.
+## Simple Punctuation Rule
+
+All generated CV, cover letter, and application text must use only simple punctuation.
+
+Allowed: period, comma, question mark, exclamation mark, straight quotation marks, colon.
+Forbidden: em dashes, en dashes, decorative strokes, decorative separators, semicolons, excessive parentheses.
+
+Scan all output before saving. Rewrite any affected sentence.
