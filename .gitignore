@@ -1,12 +1,19 @@
 # Obsidian workspace files
 .obsidian/workspace
 .obsidian/workspace.json
-.obsidian/cache
+.obsidian/workspace-mobile.json
+.obsidian/cache/
 .obsidian/plugins/obsidian-git/data.json
 
-# Environment files
+# Environment files and secrets
 .env
-.env.local
+.env.*
+!.env.example
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
 
 # OS files
 .DS_Store
@@ -14,10 +21,19 @@ Thumbs.db
 
 # Node
 node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# IDE and local workspace files
+*.code-workspace
+.vscode/settings.json
+.idea/
 
 # Private generated content
 # Uncomment if you have domains with sensitive generated outputs
 # personal/wiki/diary/
 # personal/wiki/health/
-
-.code-workspace
+# career/generated-applications/
+# career/raw-applications/
