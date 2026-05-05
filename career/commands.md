@@ -17,6 +17,22 @@ If a required input file is missing, stop and report it. Never guess.
 
 After any write operation, append a short note to `log.md`.
 
+## Prompts Layer
+
+Each command in this file has a corresponding detailed prompt file in `career/prompts/`.
+
+Before executing any command, read the corresponding prompt file for full agent logic.
+
+| Command | Prompt file |
+|---------|-------------|
+| \add | career/prompts/ingest-fit-analysis.md |
+| \decide | career/prompts/application-decision.md |
+| \cv | career/prompts/cv-generator.md |
+| \cover | career/prompts/cover-letter.md + career/prompts/cover-letter-validation.md |
+| \tracker | career/prompts/update-tracker.md |
+
+The commands.md defines the input/output contract. The prompt files define the execution logic.
+
 ## Tracker Rule
 
 The tracker in `wiki/applications.md` is feedback memory, not an archive. Before generating fit analysis, CVs, or cover letters, review the tracker for patterns: what produced silence, what produced responses, what screening risks have appeared more than once.
@@ -150,3 +166,34 @@ Do not overfit to one isolated result. Do not ignore a repeated pattern.
 5. If not SKIP: `\tracker`
 
 Never skip `\decide`. Never generate a CV without fit analysis. Never complete without `\tracker`.
+
+---
+
+## \asset {asset-name}
+
+**Purpose:** Register a public professional asset into the career domain.
+
+Use when:
+1. An article, post, or essay is published publicly.
+2. A custom AI tool, template, or framework is made public.
+3. A talk, workshop, or training resource is published.
+4. Any public-facing professional output is created.
+
+**Input:**
+- Asset title and description
+- Direct URL to the published asset
+- Related role targets
+- Related capabilities
+
+**Output:**
+- career/wiki/public-assets/{asset-name}.md
+
+**Rules:**
+1. Do not treat public assets as job applications.
+2. Do not store them in generated-applications/.
+3. Every public asset must connect to at least one capability in career/wiki/evidence/.
+4. If the asset does not strengthen positioning in a verifiable way, do not add it.
+
+**Output format for each asset file:**
+
+Follow the template in career/wiki/public-assets/README.md.
