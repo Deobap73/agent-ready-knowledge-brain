@@ -12,7 +12,7 @@ last_updated: YYYY-MM-DD
 
 ## Purpose
 
-This file tracks applications, follow-ups, role patterns, and lessons.
+This file tracks applications, follow-ups, role patterns, company responses, outcomes, and lessons.
 
 It is not an archive. It is a decision tool.
 
@@ -20,18 +20,33 @@ The goal is to answer:
 - Which roles are generating responses
 - Which narrative angles are performing
 - What is generating silence
+- Which applications produced interviews or assessments
+- Which rejection patterns are repeating
 - Where positioning needs adjustment
 - What the next application should do differently
 
 ## Status legend
+
+Initial application statuses:
 
 - planned
 - drafted
 - submitted
 - follow-up due
 - follow-up sent
-- interview
+
+Response and outcome statuses:
+
+- response received
 - rejected
+- interview invited
+- interview scheduled
+- interview completed
+- assessment requested
+- assessment submitted
+- offer
+- withdrawn by candidate
+- no response after follow up
 - archived
 
 ## Tracking table
@@ -41,15 +56,38 @@ The goal is to answer:
 
 ---
 
+## Response signal rules
+
+Detailed rules live in:
+
+career/wiki/response-signal-rules.md
+
+Core rules:
+
+- Generic rejection means weak signal.
+- Specific rejection means useful signal.
+- Interview invitation means strong positive signal.
+- Assessment request means partial positive signal.
+- Offer means confirmed positive signal.
+- Silence after follow up means negative signal only after the follow up window has passed.
+- Do not invent reasons for rejection.
+- If the company gives no evidence, mark the likely cause as Unknown.
+
+---
+
 ## Lessons learned log
 
 <!-- Add a dated entry after every application cycle. Format defined in career/prompts/update-tracker.md. -->
+
+<!-- Add response entries after company responses. Format defined in career/prompts/update-application-response.md. -->
 
 ---
 
 ## Pattern review section
 
-<!-- Add a pattern review after every 5 applications. Trigger is automatic when using the \tracker command with the update-tracker prompt. -->
+<!-- Add an application pattern review after every 5 applications. Trigger is automatic when using the \tracker command with the update-tracker prompt. -->
+
+<!-- Add a response pattern review only after at least 5 recorded outcomes. Applications are not outcomes. -->
 
 ### Current assumptions
 
@@ -64,6 +102,9 @@ The goal is to answer:
 - Do [secondary role] applications respond better?
 - Does one market respond differently from others?
 - Is the problem targeting, messaging, or proof?
+- Which roles generate interviews?
+- Which roles generate assessment requests?
+- Which rejection causes repeat?
 
 ---
 
@@ -71,7 +112,7 @@ The goal is to answer:
 
 ### Template 1: Short professional follow-up after silence
 
-Subject: [Role title] application — [Your name]
+Subject: [Role title] application, [Your name]
 
 Dear [Hiring Manager or Hiring Team],
 
@@ -86,7 +127,7 @@ Kind regards,
 
 ### Template 2: Follow-up with one reinforcing proof point
 
-Subject: [Role title] application follow-up — [Your name]
+Subject: [Role title] application follow-up, [Your name]
 
 Dear [Hiring Manager or Hiring Team],
 
@@ -104,16 +145,33 @@ Kind regards,
 ## Tracker rules
 
 ### Rule 1
+
 Every application records the main angle used. One sentence describing the positioning.
 
 ### Rule 2
+
 If an application is tailored from the base CV, note exactly what was changed.
 
 ### Rule 3
-If there is silence after follow-up, log the pattern. Silence is data.
+
+If there is silence after follow-up, log the pattern. Silence is data only after the follow-up window has passed.
 
 ### Rule 4
-Every 5 applications, trigger a pattern review. Use the prompts/update-tracker.md prompt.
+
+Every 5 applications, trigger an application pattern review. Use the prompts/update-tracker.md prompt.
 
 ### Rule 5
+
+Every response must be stored as raw evidence in career/raw-responses/{application-name}/YYYY-MM-DD-response.md before running \response.
+
+### Rule 6
+
+Every company response must generate a response-analysis.md file and a next-action.md file.
+
+### Rule 7
+
+Do not mark response patterns as confirmed before at least 5 outcomes exist.
+
+### Rule 8
+
 The tracker informs strategy. It does not override strong role evidence.
